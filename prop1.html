@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo Complejo Visual e Interactivo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <!-- Configuración de MathJax -->
+    <script src="Codes/MathJaxConfig.js"></script>
+    <!-- Importacion de librería MathJax -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- Importacion de libreria D3.js -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Importacion de libreria math.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.4.1/math.js"></script>
+</head>
+<body class="text-gray-200">
+
+    <!-- Barra de Navegación Fija -->
+    <nav id="top-nav" class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-lg">
+        <div class="container mx-auto px-4">
+            <ul class="flex flex-wrap justify-center items-center py-3 gap-6">
+                <li><a href="#intro" class="nav-link px-5 py-2.5 rounded-full font-semibold text-sm text-white bg-blue-600 hover:bg-blue-700 transition-all duration-300 shadow-md transform hover:-translate-y-0.5">Introducción</a></li>
+                
+                <li class="relative dropdown">
+                    <button aria-haspopup="true" aria-expanded="false" class="dropdown-toggle px-5 py-2.5 rounded-full font-semibold text-sm text-white bg-blue-600 hover:bg-blue-700 transition-all duration-300 shadow-md transform hover:-translate-y-0.5 flex items-center gap-2">
+                        Repaso (Cálculo Real)
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <ul class="dropdown-menu absolute hidden bg-white rounded-lg shadow-xl mt-2 py-2 w-72">
+                        <li><a href="#s1" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">1. El Espacio Real 1D</a></li>
+                        <li><a href="#s2" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">2. Límite y Continuidad en $\mathbb{R}$</a></li>
+                        <li><a href="#s3" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">3. Derivada en $\mathbb{R}$</a></li>
+                        <li><a href="#s4" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">4. El Espacio Real 2D</a></li>
+                        <li><a href="#s5" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">5. Límite y Continuidad en $\mathbb{R}^2$</a></li>
+                        <li><a href="#s6" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">6. Derivadas en $\mathbb{R}^2$</a></li>
+                    </ul>
+                </li>
+                
+                <li class="relative dropdown">
+                    <button aria-haspopup="true" aria-expanded="false" class="dropdown-toggle px-5 py-2.5 rounded-full font-semibold text-sm text-white bg-blue-600 hover:bg-blue-700 transition-all duration-300 shadow-md transform hover:-translate-y-0.5 flex items-center gap-2">
+                        Números Complejos
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <ul class="dropdown-menu absolute hidden bg-white rounded-lg shadow-xl mt-2 py-2 w-72">
+                        <li><a href="#s7" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">7. Conceptos Básicos</a></li>
+                        <li><a href="#s8" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">8. Derivada Compleja</a></li>
+                        <li><a href="#s9" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">9. Descomposición de Funciones</a></li>
+                        <li><a href="#s10" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">10. Condiciones de Cauchy-Riemann</a></li>
+                        <li><a href="#s11" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">11. Demostración Intuitiva</a></li>
+                        <li><a href="#s12" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">12. Ejemplos Visuales</a></li>
+                    </ul>
+                </li>
+                <li><a href="#gemini-assistants" class="nav-link px-5 py-2.5 rounded-full font-semibold text-sm text-white bg-indigo-600 hover:bg-indigo-700 transition-all duration-300 shadow-md transform hover:-translate-y-0.5">Asistentes IA</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Contenido Principal -->
+    <main class="container mx-auto p-4 md:p-8 lg:p-10">
+        <header class="text-center my-12 md:my-16">
+            <h1 class="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300">Cálculo Complejo Visual</h1>
+            <p class="mt-4 text-xl text-gray-300 max-w-3xl mx-auto">Entendiendo las condiciones de Cauchy–Riemann con un enfoque intuitivo y geométrico.</p>
+        </header>
+
+        <div class="space-y-16">
+            
+            <section id="intro" class="content-card text-gray-800 space-y-6 p-8 rounded-2xl shadow-xl">
+                <h2 class="text-3xl font-bold text-blue-700">Introducción</h2>
+                <p>¡Bienvenido al fascinante mundo del cálculo complejo! Este curso está diseñado para guiarte de manera <strong>clara e intuitiva</strong> a través de uno de los conceptos más importantes en matemáticas: las condiciones de Cauchy–Riemann. Avanzaremos desde los conceptos básicos de números y derivadas reales hasta los números complejos, culminando en una <strong>demostración visual</strong> de las condiciones CR. Cada sección incluye animaciones que acompañarán las explicaciones, haciendo que los conceptos abstractos sean tangibles y comprensibles.</p>
+                <p>Inspirado en el enfoque geométrico de libros como "<em>Visual Complex Analysis</em>" de Tristan Needham, este material prioriza <strong>la comprensión visual sobre el cálculo ciego</strong>. Verás que las matemáticas pueden ser tan elegantes y intuitivas como queramos que sean.</p>
+            </section>
+
+            <!-- =============================== -->
+            <!--      PARTE 1: REPASO REAL       -->
+            <!-- =============================== -->
+
+            <section id="s1" class="space-y-8">
+                <h2 class="text-3xl font-bold text-gray-100 border-l-4 border-blue-400 pl-4">1. El Espacio Real en Una Dimensión ($\mathbb{R}$)</h2>
+                <div class="content-card text-gray-800 p-8 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-semibold mb-4">1.1 Números reales: recta, magnitud y distancia</h3>
+                    <p class="mb-4"><strong>Idea principal:</strong> Imagina los números reales como una <strong>línea infinita y continua</strong> que se extiende sin fin hacia ambos lados. Cada número tiene su <strong>propio lugar</strong> en esa recta: los positivos hacia la derecha del cero, los negativos hacia la izquierda. <br><br> Cuando un punto se mueve sobre la recta, por ejemplo, desde <strong>2</strong> hasta <strong>-π</strong>, podemos ver cómo <strong>cambia su posición</strong>, pero no deja de estar sobre la misma línea. <br><br> La <strong>magnitud</strong> (o <em>valor absoluto</em>) representa la <strong>distancia al origen</strong>, sin importar el lado en que se encuentre. Así, tanto <strong>3</strong> como <strong>-3</strong> están igualmente alejados del cero. <br><br> Y si tomamos dos puntos cualesquiera, <em>a</em> y <em>b</em>, la distancia entre ellos es <strong>|a − b|</strong>: un número que siempre mide una <strong>longitud real y no negativa</strong>. <br><br> En la animación, puedes observar cómo estos movimientos y distancias se reflejan directamente sobre la recta, mostrando que los números reales no sólo son valores, sino también <strong>posiciones y separaciones</strong> dentro de un mismo espacio continuo.</p>
+                    <div class="animation-placeholder rounded-lg p-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                        <p class="text-gray-600 font-medium"></p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="s2" class="space-y-8">
+                <h2 class="text-3xl font-bold text-gray-100 border-l-4 border-blue-400 pl-4">2. Límite y Continuidad en $\mathbb{R}$</h2>
+                <div class="content-card text-gray-800 p-8 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-semibold mb-4">2.1 Límite en $\mathbb{R}$: La Noción de Acercamiento</h3>
+                    <p class="mb-4">El <strong>límite</strong> de una función real $ f : \mathbb{R} \to \mathbb{R} $ en un punto $ a $ describe el valor al que se acercan las imágenes $ f(x) $ cuando los valores de $ x $ se aproximan a $ a $. Decimos que $$ \lim_{x \to a} f(x) = L $$ si, para cada número real $ \varepsilon > 0 $, existe otro número $ \delta > 0 $ tal que: $$ 0 < |x - a| < \delta \quad \Rightarrow \quad |f(x) - L| < \varepsilon. $$ Esto significa que podemos garantizar que $ f(x) $ esté tan cerca de $ L $ como deseemos (a una distancia menor que $ \varepsilon $), siempre que tomemos los valores de $ x $ suficientemente próximos a $ a $ (dentro de una distancia menor que $ \delta $).<br><br>Visualmente, alrededor de $ x = a $ existe un <strong>intervalo de radio $ \delta $</strong> dentro del cual los valores de la función permanecen dentro de una <strong>banda horizontal de radio $ \varepsilon $</strong> centrada en $ L $. El límite <strong>no depende del valor de la función en $ a $</strong>, sino del comportamiento de $ f(x) $ *cuando se aproxima* a $ a $.</p>
+                    <div class="animation-placeholder rounded-lg p-6">
+                         <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg>
+                        <p class="text-gray-600 font-medium"></p>
+                    </div>
+                </div>
+                <div class="content-card text-gray-800 p-8 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-semibold mb-4">2.2 Continuidad en $\mathbb{R}$: Sin Saltos Inesperados</h3>
+                    <p class="mb-4">La función $ f $ es <strong>continua en un punto</strong> $ a $ si: $$ \lim_{x \to a} f(x) = f(a). $$ Es decir, el valor al que tiende $ f(x) $ cuando $ x $ se aproxima a $ a $ coincide exactamente con el valor que la función toma en ese punto.<br><br>Intuitivamente, la continuidad asegura que <strong>no hay saltos ni interrupciones</strong> en el comportamiento local de la función. No se trata de “dibujar sin levantar el lápiz”, sino de que <strong>el límite exista y coincida con el valor de la función en ese punto</strong>.<br><br>Se dice que una función es <strong>continua en un conjunto</strong> $ A \subseteq \mathbb{R} $ si es continua en <strong>cada punto</strong> de $ A $.</p>
+                </div>
+            </section>
+
+            <section id="s3" class="space-y-8">
+                <h2 class="text-3xl font-bold text-gray-100 border-l-4 border-blue-400 pl-4">3. Derivada en $\mathbb{R}$: Cambio y Linealidad</h2>
+                <div class="content-card text-gray-800 p-8 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-semibold mb-4">3.1 Derivada como pendiente y tasa de cambio</h3>
+                    <p class="mb-4"><strong>Idea principal:</strong> La derivada $f'(x)$ responde a una pregunta esencial: <strong>¿cómo cambia una función cuando su entrada varía ligeramente?</strong><br><br>Si tomamos dos puntos cercanos, $(x, f(x))$ y $(x + h, f(x + h))$, la recta que los une tiene pendiente: $$m_{\text{secante}} = \frac{f(x + h) - f(x)}{h}.$$ Cuando $h$ tiende a 0, esta secante se aproxima a la <strong>recta tangente</strong>, cuya pendiente define la derivada: $$f'(x) = \lim_{h \to 0} \frac{f(x + h) - f(x)}{h}.$$ Para que este límite exista, la pendiente debe acercarse al mismo valor desde ambos lados (izquierda y derecha). Si coinciden, la derivada existe; si difieren, la función tiene un "quiebre" o una esquina y no es derivable.<br><br>Así, la derivada combina dos perspectivas equivalentes: <ul class="list-disc ml-6 mt-2"><li><strong>Geométrica:</strong> la pendiente de la recta tangente.</li><li><strong>Dinámica:</strong> la tasa de cambio instantánea.</li></ul></p>
+                    <div class="animation-placeholder rounded-lg p-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h.5A2.5 2.5 0 0020 5.5V3.935m-14 0A2.5 2.5 0 018.5 2h7A2.5 2.5 0 0118 4.5v1.435" /></svg>
+                        <p class="text-gray-600 font-medium"></p>
+                    </div>
+                </div>
+                <div class="content-card text-gray-800 p-8 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-semibold mb-4">3.2 Derivada y linealización</h3>
+                    <p class="mb-4"><strong>Idea principal:</strong> Una función diferenciable es <strong>localmente lineal</strong>. Si hacemos suficiente zoom en su gráfica, se vuelve casi indistinguible de una línea recta. Esta idea se expresa con la <strong>aproximación lineal</strong>: $$f(x + h) \approx f(x) + f'(x)h.$$ Aquí, el término $f'(x)h$ representa el cambio aproximado de la función ante un desplazamiento horizontal pequeño $h$. La derivada actúa como un traductor entre desplazamientos en $x$ y cambios en $f(x)$, de forma lineal.</p>
+                    <div class="animation-placeholder rounded-lg p-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" /></svg>
+                        <p class="text-gray-600 font-medium"></p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="s4" class="space-y-8">
+                <h2 class="text-3xl font-bold text-gray-100 border-l-4 border-blue-400 pl-4">4. El Espacio Real en Dos Dimensiones ($\mathbb{R}^2$)</h2>
+                 <div class="content-card text-gray-800 p-8 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-semibold mb-4">4.1 Coordenadas y distancia en el plano</h3>
+                    <p class="mb-4"><strong>Idea principal:</strong> Al pasar de una sola dimensión a dos, la línea se convierte en un <strong>plano</strong>. Ahora, para ubicar un punto, necesitamos <strong>dos números reales</strong>. Cada punto se representa como un <strong>par ordenado</strong> $(x, y)$, donde <em>x</em> indica la posición horizontal y <em>y</em> la vertical. <br><br> La <strong>distancia</strong> entre dos puntos $(x_1, y_1)$ y $(x_2, y_2)$ ya no es un simple valor absoluto, sino que se calcula con el Teorema de Pitágoras, dándonos la <strong>distancia euclidiana</strong>: $$ d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2} $$ Así, los números reales se expanden y dan lugar a un <strong>espacio bidimensional continuo</strong>, donde cada punto tiene su magnitud, su dirección y su propio lugar en el plano.</p>
+                    <div class="animation-placeholder rounded-lg p-6">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7-4h14" /></svg>
+                     <p class="text-gray-600 font-medium"></p>
+                 </div>
+             </div>
+            </section>
+
+            <section id="s5" class="space-y-8">
+                <h2 class="text-3xl font-bold text-gray-100 border-l-4 border-blue-400 pl-4">5. Límite y Continuidad en $\mathbb{R}^2$</h2>
+                <div class="content-card text-gray-800 p-8 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-semibold mb-4">5.1 Límite en $\mathbb{R}^2$: Acercamiento Multidireccional</h3>
+                    <p class="mb-4">Para una función de dos variables $ f : \mathbb{R}^2 \to \mathbb{R} $, el límite generaliza la misma idea, pero el acercamiento puede hacerse <strong>por cualquier dirección del plano</strong>. Decimos que $$ \lim_{(x, y) \to (a, b)} f(x, y) = L $$ si, para todo $ \varepsilon > 0 $, existe un $ \delta > 0 $ tal que: $$ 0 < \sqrt{(x - a)^2 + (y - b)^2} < \delta \quad \Rightarrow \quad |f(x, y) - L| < \varepsilon. $$ Geométricamente, los valores de $ f(x, y) $ permanecen dentro de una <strong>banda de altura $ 2\varepsilon $</strong> siempre que $(x, y)$ esté dentro de un <strong>disco de radio $ \delta $</strong> alrededor de $(a, b)$. El límite existe únicamente si <strong>todos los caminos</strong> que se aproximen a $(a, b)$ conducen al mismo valor $ L $. Si distintos caminos dan resultados distintos, el límite no existe.</p>
+                </div>
+                 <div class="content-card text-gray-800 p-8 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-semibold mb-4">5.2 Continuidad en $\mathbb{R}^2$</h3>
+                    <p class="mb-4">La función $ f $ es <strong>continua en un punto</strong> $(a, b)$ si: $$ \lim_{(x, y) \to (a, b)} f(x, y) = f(a, b). $$ Esto garantiza que el valor de la función en ese punto coincide con el valor al que se aproximan sus imágenes cuando nos acercamos a $(a, b)$ desde cualquier dirección del plano. Geométricamente, esto significa que la superficie $ z = f(x, y) $ <strong>no presenta saltos ni huecos</strong>.</p>
+                    <blockquote class="mt-6 p-4 italic border-l-4 bg-gray-100 text-gray-700 border-gray-500">
+                        <h4 class="font-bold text-lg mb-2">Síntesis Conceptual</h4>
+                        <p>En cualquier dimensión, el límite captura la idea de <strong>acercarse sin tocar</strong>: por cada tolerancia vertical ($\varepsilon$), existe un radio ($\delta$) que garantiza la proximidad deseada. La <strong>continuidad</strong> es simplemente el caso en que ese límite <strong>coincide con el valor real de la función</strong> en el punto.</p>
+                    </blockquote>
+                </div>
+            </section>
+            
+            <section id="s6" class="space-y-8">
+                <h2 class="text-3xl font-bold text-gray-100 border-l-4 border-blue-400 pl-4">6. Derivadas en $\mathbb{R}^2$: Un Mundo de Direcciones</h2>
+                <div class="content-card text-gray-800 p-8 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-semibold mb-4">6.1 Derivadas parciales y el plano tangente</h3>
+                    <p class="mb-4"><strong>Idea principal:</strong> En $\mathbb{R}^2$ la gráfica de $ f(x,y) $ es una <strong>superficie</strong>. Para entender su cambio local debemos ver cómo se inclina esa superficie en distintas direcciones, ya que los cambios pueden venir de infinitas direcciones.<br><br>Si variamos solo $x$ (dejando $y$ fijo) obtenemos la <strong>derivada parcial respecto a $x$</strong>: $$ f_x(x,y)=\lim_{h\to0}\frac{f(x+h,y)-f(x,y)}{h}. $$ De forma análoga, variando solo $y$ obtenemos la <strong>derivada parcial respecto a $y$</strong>: $$ f_y(x,y)=\lim_{h\to0}\frac{f(x,y+h)-f(x,y)}{h}. $$ <br>Cuando la función es "suave" (diferenciable), estos cambios encajan en una aproximación lineal común: un <strong>plano tangente</strong> en $(x_0,y_0)$, dado por: $$ z \approx f(x_0,y_0) + f_x(x_0,y_0)(x-x_0) + f_y(x_0,y_0)(y-y_0). $$ Esta idea de un "mapa de cambios" en 2D, capturado por las derivadas parciales, será fundamental para entender la derivada compleja.</p>
+                </div>
+            </section>
+
+            <!-- =============================== -->
+            <!--    PARTE 2: CÁLCULO COMPLEJO    -->
+            <!-- =============================== -->
+
+            <section id="s7" class="space-y-8">
+               <h2 class="text-3xl font-bold text-gray-100 border-l-4 border-blue-400 pl-4">7. Números complejos: conceptos básicos</h2>
+               <div class="content-card text-gray-800 p-8 rounded-2xl shadow-xl space-y-6">
+                <h3 class="text-2xl font-semibold mb-2">7.1 Definición y Representación Geométrica</h3>
+                
+                <div>
+                    <h4 class="text-xl font-semibold text-blue-700">Motivación</h4>
+                    <p class="mt-2">En el conjunto de los números reales, ciertas ecuaciones no tienen solución, como $ x^2 + 1 = 0 $. Para superar esta limitación, se <strong>amplía el conjunto de los reales</strong> introduciendo un nuevo símbolo $i$, definido por la propiedad fundamental $ i^2 = -1 $. Esta extensión da origen al <strong>campo de los números complejos</strong>.</p>
+                </div>
+                <hr>
+                <div>
+                    <h4 class="text-xl font-semibold text-blue-700">Definición e Interpretación Geométrica</h4>
+                    <p class="mt-2">Un <strong>número complejo</strong> es una expresión de la forma $ z = a + bi $, donde $a, b \in \mathbb{R}$. Geométricamente, cada número complejo puede representarse como el punto $(a,b)$ en el <strong>plano complejo</strong>.</p>
+                </div>
+                <hr>
+                <div>
+                    <h4 class="text-xl font-semibold text-blue-700">Relación con $\mathbb{R}^2$</h4>
+                    <p class="mt-2">El conjunto $\mathbb{C}$ es <strong>isomorfo</strong> a $\mathbb{R}^2$ como espacio vectorial. La diferencia esencial es que en $\mathbb{C}$ existe una <strong>multiplicación interna</strong>, que dota al conjunto de una estructura de <strong>campo</strong>.</p>
+                </div>
+                <hr>
+                <div>
+                    <h4 class="text-xl font-semibold text-blue-700">Ausencia de Orden en $\mathbb{C}$</h4>
+                    <p class="mt-2">A diferencia de los reales, <strong>no es posible definir un orden en $\mathbb{C}$</strong> compatible con sus operaciones. No se puede decir si un complejo es "mayor" o "menor" que otro de forma coherente.</p>
+                </div>
+                <hr>
+                <div>
+                    <h4 class="text-xl font-semibold text-blue-700">Observación sobre la Unidad Imaginaria</h4>
+                    <p class="mt-2">$i$ <strong>se define</strong> únicamente por la relación $i^2 = -1$. No es riguroso escribir $i = \sqrt{-1}$, ya que la raíz cuadrada en los complejos es <strong>multivaluada</strong>.</p>
+                </div>
+            
+                <div class="bg-green-50 border-l-4 border-green-500 text-green-800 p-4 rounded-r-lg mt-6">
+                    <p class="font-bold flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Dato Adicional
+                    </p>
+                    <p class="mt-2">
+                        Hablando de raíces, el propio número $i$ tiene dos raíces cuadradas. Son los números complejos:
+                        $$ z_1 = \frac{1}{\sqrt{2}} + \frac{1}{\sqrt{2}}i \quad \text{y} \quad z_2 = -\frac{1}{\sqrt{2}} - \frac{1}{\sqrt{2}}i $$
+                        Puedes comprobarlo elevando cualquiera de los dos al cuadrado. ¡El resultado es $i$!
+                    </p>
+                </div>
+            </div>
+            
+            <div class="content-card text-gray-800 p-8 rounded-2xl shadow-xl">
+                <h3 class="text-2xl font-semibold mb-4">7.2 Operaciones y su Interpretación Geométrica</h3>
+                <p class="mb-6">Las operaciones con números complejos no son meros cálculos algebraicos; cada una corresponde a una <strong>transformación geométrica</strong> en el plano. Entender esta conexión es clave para desarrollar una intuición visual.</p>
+                
+                <h4 class="text-xl font-semibold text-blue-700">Suma: La Ley del Paralelogramo</h4>
+                <p class="mt-2">La suma de dos números complejos, $z_1 = a+bi$ y $z_2 = c+di$, se calcula componente a componente, igual que en los vectores de $\mathbb{R}^2$:
+                $$ z_1 + z_2 = (a+c) + (b+d)i $$
+                Geométricamente, esto es la <strong>suma de vectores</strong>. Si visualizas $z_1$ y $z_2$ como flechas desde el origen, el vector suma $z_1+z_2$ es la <strong>diagonal principal del paralelogramo</strong> que forman ambos vectores.</p>
+                <div class="animation-placeholder rounded-lg p-6 mt-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 16.382V5.618a1 1 0 00-1.447-.894L15 7m-6 10v-5h6v5m0 0l-6-3" /></svg>
+                    <p class="text-gray-600 font-medium"></p>
+                    <p class="text-sm text-gray-500 text-center">Arrastra los vectores $z_1$ y $z_2$ y observa cómo se forma el paralelogramo y su diagonal $z_1+z_2$.</p>
+                </div>
+           </div>
+           
+           <div class="content-card text-gray-800 p-8 rounded-2xl shadow-xl space-y-6">
+                <h4 class="text-xl font-semibold text-blue-700">Módulo, Argumento y Conjugado: Propiedades</h4>
+                <p>Estas tres propiedades son los pilares de la geometría compleja.</p>
+                <ul class="list-disc ml-6 space-y-4 mt-4">
+                    <li>
+                        <strong>Módulo $|z|$:</strong> Es la distancia al origen.
+                        <ul class="list-circle ml-6 mt-2 space-y-1">
+                            <li>$|z| \ge 0$, y $|z| = 0 \iff z=0$.</li>
+                            <li>$|\bar{z}| = |z|$ (la reflexión no altera la longitud).</li>
+                            <li>$|z_1 z_2| = |z_1| |z_2|$ (la longitud del producto es el producto de longitudes).</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Conjugado $\bar{z}$:</strong> Es la reflexión sobre el eje real.
+                        <ul class="list-circle ml-6 mt-2 space-y-1">
+                            <li>$\overline{\bar{z}} = z$ (reflejar dos veces te devuelve al inicio).</li>
+                            <li>$\overline{z_1 + z_2} = \bar{z_1} + \bar{z_2}$ (la reflexión de una suma es la suma de reflexiones).</li>
+                            <li>$\overline{z_1 z_2} = \bar{z_1} \bar{z_2}$.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Argumento $\arg(z)$:</strong> Es el ángulo $\theta$ del vector con el eje real positivo.
+                         <ul class="list-circle ml-6 mt-2 space-y-1">
+                            <li>$\arg(\bar{z}) = -\arg(z)$ (la reflexión invierte el ángulo).</li>
+                            <li>$\arg(z_1 z_2) = \arg(z_1) + \arg(z_2) \pmod{2\pi}$.</li>
+                        </ul>
+                    </li>
+                </ul>
+                <h5 class="font-semibold text-lg text-gray-900 pt-4">¿Cómo se calcula el argumento?</h5>
+                <p>Calcular $\theta$ simplemente como $\arctan(b/a)$ es un error común, ya que la arcotangente solo devuelve valores en $(-\pi/2, \pi/2)$ y no puede distinguir entre cuadrantes. Por ejemplo, $1+i$ y $-1-i$ tienen la misma tangente (1), pero sus ángulos difieren en $\pi$. La forma correcta es usar la función <strong>atan2(b, a)</strong>, que tiene en cuenta los signos de $a$ y $b$ para devolver el ángulo correcto en el intervalo $(-\pi, \pi]$.</p>
+           </div>
+           
+           <div class="content-card text-gray-800 p-8 rounded-2xl shadow-xl space-y-6">
+                <h4 class="text-xl font-semibold text-blue-700">Multiplicación: La Roto-Homotecia</h4>
+                <p>La multiplicación es la operación más reveladora. Usando la <strong>forma trigonométrica (o polar)</strong> de un número complejo, $z = r(\cos\theta + i\sin\theta)$, la regla se vuelve clara. Si tenemos dos números:</p>
+                $z_1 = r_1(\cos\theta_1 + i\sin\theta_1)$ <br>
+                $z_2 = r_2(\cos\theta_2 + i\sin\theta_2)$
+                <p>El producto es:</p>
+                $$ z_1 z_2 = r_1 r_2 (\cos(\theta_1+\theta_2) + i\sin(\theta_1+\theta_2)) $$
+                Esto nos dice que para multiplicar dos números complejos, <strong>multiplicamos sus módulos y sumamos sus argumentos</strong>.Es decir, se expande o contrae y se rota el nuevo número complejo (Homotecia).
+                
+                <h5 class="font-semibold text-lg text-gray-900 pt-4">Demostración: ¿Por qué se suman los argumentos?</h5>
+                <p>La prueba es una aplicación directa de las identidades trigonométricas de suma de ángulos. Al multiplicar $z_1$ y $z_2$ y reagrupar las partes real e imaginaria, obtenemos:</p>
+                <p>$ z_1 z_2 = r_1 r_2 [(\cos\theta_1\cos\theta_2 - \sin\theta_1\sin\theta_2) + i(\sin\theta_1\cos\theta_2 + \cos\theta_1\sin\theta_2)] $</p>
+                <p>Reconocemos las fórmulas del coseno y seno de una suma:</p>
+                 <ul class="list-disc ml-6 space-y-2 mt-2">
+                    <li>$\cos(\theta_1+\theta_2) = \cos\theta_1\cos\theta_2 - \sin\theta_1\sin\theta_2$</li>
+                    <li>$\sin(\theta_1+\theta_2) = \sin\theta_1\cos\theta_2 + \cos\theta_1\sin\theta_2$</li>
+                </ul>
+                <p>Sustituyendo estas identidades, llegamos directamente a la regla del producto. Como consecuencia, para potencias enteras, tenemos la <strong>Fórmula de De Moivre</strong>:</p>
+                $$ [r(\cos\theta + i\sin\theta)]^n = r^n(\cos(n\theta) + i\sin(n\theta)) $$
+
+                 <div class="animation-placeholder rounded-lg p-6 mt-4">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h5M5.75 16.25a8.003 8.003 0 0012.5 0M19.25 7.75a8.003 8.003 0 00-12.5 0" /></svg>
+                     <p class="text-gray-600 font-medium">Animación Sugerida: Multiplicación como Roto-Escalado</p>
+                 </div>
+           </div>
+           
+            <div class="content-card text-gray-800 p-8 rounded-2xl shadow-xl space-y-6">
+                <h4 class="text-xl font-semibold text-blue-700">La Desigualdad Triangular y la Ley del Coseno</h4>
+                <p>La famosa <strong>desigualdad triangular</strong>, $|z_1 + z_2| \le |z_1| + |z_2|$, tiene una interpretación geométrica obvia: en el triángulo formado por los vectores $0, z_1, z_1+z_2$, la longitud de un lado ($|z_1+z_2|$) nunca puede ser mayor que la suma de las longitudes de los otros dos lados ($|z_1|$ y $|z_2|$). La igualdad solo se da si $z_1$ y $z_2$ apuntan en la misma dirección.</p>
+                <p>De hecho, la relación es más precisa y es la <strong>versión compleja de la Ley del Coseno</strong>:
+                $$ |z_1+z_2|^2 = |z_1|^2 + |z_2|^2 + 2\Re(z_1\overline{z_2}) $$
+                El término $2\Re(z_1\overline{z_2})$ es exactamente $2|z_1||z_2|\cos(\theta)$, donde $\theta$ es el ángulo entre los vectores $z_1$ y $z_2$. Esto conecta directamente la geometría de los triángulos con el álgebra de los números complejos.</p>
+                 <blockquote class="mt-6 p-4 italic border-l-4 bg-gray-100 text-gray-700 border-gray-500">
+                    <h4 class="font-bold text-lg mb-2">Resumen Visual de Operaciones</h4>
+                    <ul class="list-disc ml-6 mt-2">
+                       <li><strong>Suma:</strong> Diagonal de paralelogramo (traslación).</li>
+                       <li><strong>Conjugado:</strong> Reflejo respecto al eje real.</li>
+                       <li><strong>Producto:</strong> Escalar por el módulo y rotar por el argumento.</li>
+                       <li><strong>$z\overline{z}=|z|^2$:</strong> Cancela rotación, deja escala al cuadrado.</li>
+                    </ul>
+                </blockquote>
+            </div>
+            </section>
+
+            <section id="s8" class="space-y-8">
+                <h2 class="text-3xl font-bold text-gray-100 border-l-4 border-blue-400 pl-4">8. Funciones de variable compleja: ¿qué significa derivar?</h2>
+                <div class="content-card text-gray-800 p-8 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-semibold mb-4">8.1 Definición de derivada compleja</h3>
+                    <p>La derivada $f'(z_0)$ existe si el cociente $ \frac{f(z_0+h)-f(z_0)}{h} $ tiende al mismo número complejo sin importar la dirección desde la que $h \to 0$.</p>
+                    <h3 class="text-2xl font-semibold mt-6 mb-4">8.2 Derivada como transformación lineal isotrópica</h3>
+                    <p class="mb-4"><strong>Idea:</strong> "Isotrópico" significa "igual en todas las direcciones". Si la derivada compleja existe, la mejor aproximación lineal a $f$ debe ser una <strong>rotación combinada con un escalado uniforme</strong>. No puede estirar de manera diferente en distintas direcciones.</p>
+                    <div class="animation-placeholder rounded-lg p-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                        <p class="text-gray-600 font-medium">Animación Sugerida: Transformación de Círculos</p>
+                        <p class="text-sm text-gray-500">Diferenciable: Círculo → Círculo | No Diferenciable: Círculo → Elipse</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="s9" class="space-y-8">
+                <h2 class="text-3xl font-bold text-gray-100 border-l-4 border-blue-400 pl-4">9. Descomposición de una función compleja</h2>
+                <div class="content-card text-gray-800 p-8 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-semibold mb-4">9.1 Escribir $f(z)=u(x,y)+iv(x,y)$</h3>
+                    <p class="mb-4"><strong>Idea:</strong> Toda función compleja $f(z)$, donde $z = x + iy$, puede descomponerse en dos funciones reales, $u(x, y)$ (parte real) y $v(x, y)$ (parte imaginaria). Es una <strong>transformación del plano en sí mismo</strong>.</p>
+                    <h3 class="text-2xl font-semibold mt-6 mb-4">9.2 Derivadas parciales y la matriz jacobiana</h3>
+                    <p>La "mejor aproximación lineal" en $(x,y)$ está dada por la matriz jacobiana:</p>
+                    $$ J_f = \begin{pmatrix} u_x & u_y \\ v_x & v_y \end{pmatrix} $$
+                    <div class="animation-placeholder rounded-lg p-6 mt-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+                        <p class="text-gray-600 font-medium">Animación Sugerida: Deformación de una Retícula</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="s10" class="space-y-8">
+               <h2 class="text-3xl font-bold text-gray-100 border-l-4 border-blue-400 pl-4">10. Condiciones de Cauchy–Riemann</h2>
+               <div class="content-card text-gray-800 p-8 rounded-2xl shadow-xl">
+                <h3 class="text-2xl font-semibold mb-4">10.1 Enunciado</h3>
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg text-center text-xl">
+                    $$ u_x = v_y \quad \text{y} \quad u_y = -v_x $$
+                </div>
+                <h3 class="text-2xl font-semibold mt-6 mb-4">10.2 Interpretación visual</h3>
+                <p>Las condiciones de Cauchy–Riemann son la <strong>traducción algebraica</strong> de la propiedad de isotropía. Exigen que la matriz jacobiana sea una <strong>pura rotación y escalado uniforme</strong>, tomando la forma:</p>
+                $$ J_f = \begin{pmatrix} a & -b \\ b & a \end{pmatrix} $$
+            </div>
+            </section>
+
+            <section id="s11" class="space-y-8">
+               <h2 class="text-3xl font-bold text-gray-100 border-l-4 border-blue-400 pl-4">11. Demostración (intuitiva)</h2>
+               <div class="content-card text-gray-800 p-8 rounded-2xl shadow-xl">
+                <h3 class="text-2xl font-semibold mb-4">Por qué las condiciones CR son necesarias y suficientes</h3>
+                <p><strong>Intuición:</strong> La estructura rígida de la multiplicación compleja (rotación + escalado) <strong>fuerza</strong> las relaciones específicas entre las derivadas parciales de $u$ y $v$. Si la mejor aproximación lineal real (el jacobiano) ya tiene la forma de una multiplicación compleja, entonces la función se comportará localmente como una, que es el requisito para ser derivable.</p>
+            </div>
+            </section>
+
+            <section id="s12" class="space-y-8">
+                <h2 class="text-3xl font-bold text-gray-100 border-l-4 border-blue-400 pl-4">12. Ejemplos Visuales</h2>
+                <div class="content-card text-gray-800 p-8 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-semibold mb-4">Ejemplo 1: $f(z)=z^2$ (Derivable ✔)</h3>
+                    <p>Aquí, $u(x,y) = x^2 - y^2$ y $v(x,y) = 2xy$. Verificando las derivadas parciales:</p>
+                    <ul class="list-disc list-inside mt-2">
+                        <li>$ u_x = 2x $, $ v_y = 2x $  $\implies u_x = v_y$</li>
+                        <li>$ u_y = -2y $, $ v_x = 2y $ $\implies u_y = -v_x$</li>
+                    </ul>
+                    <p class="mt-2">Las condiciones CR se cumplen en todo el plano. Es analítica.</p>
+                </div>
+                <div class="content-card text-gray-800 p-8 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-semibold mb-4">Ejemplo 2: $f(z)=\bar{z}$ (No Derivable ✘)</h3>
+                    <p>Aquí, $u(x,y) = x$ y $v(x,y) = -y$.</p>
+                    <ul class="list-disc list-inside mt-2">
+                        <li>$ u_x = 1 $, $ v_y = -1 $ $\implies u_x \neq v_y$</li>
+                    </ul>
+                    <p class="mt-2">No se cumplen las CR en ningún punto. No es derivable. Geométricamente es una reflexión, no una rotación.</p>
+                </div>
+            </section>
+
+            <!-- =============================== -->
+            <!--   PARTE 3: ASISTENTES DE IA     -->
+            <!-- =============================== -->
+
+            <section id="gemini-assistants" class="space-y-16">
+                <!-- Asistente 1: Analizador de Funciones -->
+                <div class="content-card text-gray-800 p-8 rounded-2xl shadow-xl">
+                    <h2 class="text-3xl font-bold text-blue-700 mb-4">✨ Asistente Analizador de Funciones</h2>
+                    <p class="mb-4">Ingresa una función compleja de $z$ y la analizaremos, comparando su comportamiento real y complejo.</p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <input id="function-input" type="text" placeholder="Ej: z^3 + z" class="flex-grow p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                        <button id="analyze-btn" class="gemini-btn px-6 py-3 text-white font-semibold rounded-lg shadow-md">Analizar Función</button>
+                    </div>
+                    <div id="analysis-result" class="mt-6 p-6 bg-gray-50 rounded-lg min-h-[100px] border">
+                        <p class="text-gray-500">El análisis de tu función aparecerá aquí...</p>
+                    </div>
+                </div>
+
+                <!-- Asistente 2: Asistente Conceptual -->
+                <div class="content-card text-gray-800 p-8 rounded-2xl shadow-xl">
+                    <h2 class="text-3xl font-bold text-blue-700 mb-4">✨ Asistente Conceptual</h2>
+                    <p class="mb-4">¿Tienes una idea o intuición sobre un concepto? Escríbela aquí para discutirla.</p>
+                    <div class="flex flex-col gap-4">
+                        <textarea id="concept-input" rows="4" placeholder="Ej: Entiendo que la transformación 1/z invierte los puntos respecto al círculo unitario..." class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"></textarea>
+                        <button id="discuss-btn" class="gemini-btn px-6 py-3 text-white font-semibold rounded-lg shadow-md self-start">Discutir Idea</button>
+                    </div>
+                    <div id="discussion-result" class="mt-6 p-6 bg-gray-50 rounded-lg min-h-[100px] border">
+                        <p class="text-gray-500">La retroalimentación a tu idea aparecerá aquí...</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <script src="Codes/Main.js"></script>
+</body>
+</html>
+
